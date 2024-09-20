@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", "https://git.heroku.com/server-deltrigo.git", true);
+            xhr.open("POST", "https://server-deltrigo.herokuapp.com", true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
             xhr.onreadystatechange = function (){
