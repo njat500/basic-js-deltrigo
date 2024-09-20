@@ -1,3 +1,5 @@
+const { default: Swal } = require("sweetalert2");
+
 document.addEventListener("DOMContentLoaded", () => {
     const items = document.querySelectorAll(".item");
     const productCompra = document.getElementById("productCompra");
@@ -69,7 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             xhr.onreadystatechange = function (){
                 if (xhr.readyState === 4 && xhr.status === 200){
-                    alert("Compra finalizada!");
+                    Swal.fire({
+                        title: "Genial",
+                        text: "Compra realizada!",
+                        icon:"success",
+                        confirmButtonText: "Ok"
+                    });
                     carrito.length = 0;
                     saveCart();
                     renderCart();
