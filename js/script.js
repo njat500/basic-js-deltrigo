@@ -1,5 +1,3 @@
-const { default: Swal } = require("sweetalert2");
-
 document.addEventListener("DOMContentLoaded", () => {
     const items = document.querySelectorAll(".item");
     const productCompra = document.getElementById("productCompra");
