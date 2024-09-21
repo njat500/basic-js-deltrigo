@@ -54,7 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
         mostrarNoti("El carrito ha sido vaciado.");
     });
 
-    document.getElementById("finalizarCompra").addEventListener("click", () => {
+    document.getElementById("finalizarCompra").addEventListener("click", (event) => {
+        event.preventDefault();
+    
         if (carrito.length === 0) {
             mostrarNoti("El carrito está vacío.", true);
         } else {
@@ -62,31 +64,31 @@ document.addEventListener("DOMContentLoaded", () => {
                 carrito: carrito,
                 total: carrito.reduce((sum, item) => sum + item.price * item.quantity, 0)
             };
-
+    
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "https://server-deltrigo-917dc241a855.herokuapp.com/carrito", true);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-            xhr.onreadystatechange = function (){
-                if (xhr.readyState === 4 && xhr.status === 200){
+    
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
                     Swal.fire({
-                        title: "Genial",
-                        text: "Compra realizada!",
-                        icon:"success",
+                        title: "Compra finalizada",
+                        text: "¡Tu compra ha sido procesada con éxito!",
+                        icon: "success",
                         confirmButtonText: "Ok"
+                    }).then(() => {
+                        carrito.length = 0;
+                        saveCart();
+                        renderCart();
                     });
-                    carrito.length = 0;
-                    saveCart();
-                    renderCart();
                 }
             };
-
+    
             xhr.send(JSON.stringify(data));
         }
     });
-
-    renderCart();
-});
+    
+})    
 
 function cerrarCarrito(){
     const exit = document.getElementById("cart-wrap");
@@ -117,3 +119,17 @@ function revelarCarrito(){
     document.getElementById("fondo-oscuro").style.display = "block";
     cartWrap.style.display = "block";
 }
+
+
+//Finalizar compra BTN /
+const endbtn = document.getElementById("finalizarCompra")
+endbtn.addEventListener("click", () => {
+    Swal.fire({
+        title: "Compra finalizada",
+        text: "¡Tu compra ha sido procesada con éxito!",
+        icon: "success",
+        confirmButtonText: "Ok"
+    }).then(() => {
+        location.reload();
+    });
+})
